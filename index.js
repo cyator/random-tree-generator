@@ -1,13 +1,27 @@
-// import Tree from './tree.js';
-const canvas = document.getElementById('canvas');
-const generateButton = document.querySelector('.gen-tree-btn');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-const ctx = canvas.getContext('2d');
+let canvas;
+let ctx;
+let generateButton;
+
+window.onload = () => {
+	canvas = document.getElementById('canvas');
+	generateButton = document.querySelector('.gen-tree-btn');
+	ctx = canvas.getContext('2d');
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+	drawTree(canvas.width / 2, canvas.height - 80, 120, 0, 25, 'brown', 'green');
+	generateButton.addEventListener('click', generateRandomTree);
+};
+
+window.addEventListener('resize', () => {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+	drawTree(canvas.width / 2, canvas.height - 80, 120, 0, 25, 'brown', 'green');
+	generateButton.addEventListener('click', generateRandomTree);
+});
+
 let curve = 10;
 let curve2 = 0;
-// const tree = new Tree(ctx, start, 120, 2, color);
-// tree.drawTree(0);
 
 function drawTree(startX, startY, length, angle, branchWidth, color1, color2) {
 	ctx.beginPath();
@@ -44,8 +58,6 @@ function drawTree(startX, startY, length, angle, branchWidth, color1, color2) {
 	ctx.restore();
 }
 
-drawTree(canvas.width / 2, canvas.height - 80, 120, 0, 25, 'brown', 'green');
-
 function generateRandomTree() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	const centerPointX = canvas.width / 2;
@@ -70,5 +82,3 @@ function generateRandomTree() {
 		color2
 	);
 }
-
-generateButton.addEventListener('click', generateRandomTree);
